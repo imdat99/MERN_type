@@ -1,0 +1,11 @@
+POST  http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+    "username":"dat.lt",
+    "password":"datkhong9"
+}
+###
+
+get http://localhost:5000/api/auth
+Authorization: Bare eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1SWQiOiI2MjE3YzY0MWJkODM1MmUyNDJhOWNmYjkiLCJpYXQiOjE2NDU3MjUyNDksImV4cCI6MTY0NTcyNjQ0OX0.0viFciLUAIhuw2p2esBqJ_zK6vKdXYBTmx1V7bAM0ts
