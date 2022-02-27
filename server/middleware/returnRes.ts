@@ -21,7 +21,7 @@ const returnRes = {
         res.status(200).json({
             success: true,
             msg,
-            token: token.accessToken
+            accesstoken: token.accessToken
         })
     }
 }

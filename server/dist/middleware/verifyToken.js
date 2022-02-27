@@ -14,9 +14,10 @@ const verfytoken = (req, res, next) => {
     if (!refreshToken)
         return returnRes_1.default.res401(res);
     try {
-        const secretKey = process.env.ACCESTOKEN_TOKEN_SECRET;
-        const payload = jsonwebtoken_1.default.verify(token, secretKey);
+        const payload = jsonwebtoken_1.default.verify(token, process.env.ACCESTOKEN_TOKEN_SECRET);
+        jsonwebtoken_1.default.verify(refreshToken, process.env.REFRESHTOKEN_TOKEN_SECRET);
         req.uId = payload.uId;
+        req.refreshToken = refreshToken;
         next();
     }
     catch (err) {

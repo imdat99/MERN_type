@@ -35,4 +35,4 @@ const profileSchema = new mongoose_1.Schema({
 }, {
     timestamps: true
 });
-exports.default = mongoose_1.default.model('Profile', profileSchema);
+exports.default = mongoose_1.default.model('profiles', profileSchema);

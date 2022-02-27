@@ -11,9 +11,10 @@ const verfytoken = (req: RequestCustom, res: Response, next: NextFunction) => {
     if (!token) return returnRes.res401(res)
     if (!refreshToken) return returnRes.res401(res)
     try {
-        const secretKey: Secret = process.env.ACCESTOKEN_TOKEN_SECRET as Secret
-        const payload = jwt.verify(token, secretKey) as any
+        const payload = jwt.verify(token, process.env.ACCESTOKEN_TOKEN_SECRET as Secret) as any
+        jwt.verify(refreshToken, process.env.REFRESHTOKEN_TOKEN_SECRET as Secret) as any
         req.uId = payload.uId
+        req.refreshToken = refreshToken
 
         next();
     } catch (err) {

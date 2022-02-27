@@ -8,7 +8,7 @@ const generateTokens = (payload) => {
     const accessToken = jsonwebtoken_1.default.sign(payload, process.env.ACCESTOKEN_TOKEN_SECRET, {
         expiresIn: '20m'
     });
-    const refreshToken = jsonwebtoken_1.default.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
+    const refreshToken = jsonwebtoken_1.default.sign(payload, process.env.REFRESHTOKEN_TOKEN_SECRET, {
         expiresIn: '1h'
     });
     return {

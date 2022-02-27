@@ -1,15 +1,19 @@
 import jwt, { Secret } from "jsonwebtoken"
+import dbRefreshTokens, { RefreshTokens } from "../models/dbRefreshToken"
+
 type payload = string | object | Buffer
+
 export interface token {
     accessToken: string
     refreshToken: string
 }
+
 const generateTokens = (payload: payload) => {
     const accessToken = jwt.sign(payload, process.env.ACCESTOKEN_TOKEN_SECRET as Secret, {
         expiresIn: '20m'
     })
 
-    const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET as Secret, {
+    const refreshToken = jwt.sign(payload, process.env.REFRESHTOKEN_TOKEN_SECRET as Secret, {
         expiresIn: '1h'
     })
     return {

@@ -3,4 +3,5 @@ import { JwtPayload } from "jsonwebtoken";
 
 export interface RequestCustom extends Request {
     uId?: string | JwtPayload
+    refreshToken?: string
 }

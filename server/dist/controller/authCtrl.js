@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.authCtrl = void 0;
 const argon2_1 = __importDefault(require("argon2"));
 const users_1 = __importDefault(require("../models/users"));
+const dbRefreshToken_1 = __importDefault(require("../models/dbRefreshToken"));
+const profile_1 = __importDefault(require("../models/profile"));
 const generateTokens_1 = __importDefault(require("../middleware/generateTokens"));
 const asyncWrapper_1 = __importDefault(require("../middleware/asyncWrapper"));
 const returnRes_1 = __importDefault(require("../middleware/returnRes"));
@@ -28,19 +30,36 @@ exports.authCtrl = {
         // res.json({ success: true, user })
     })),
     register: (0, asyncWrapper_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        const { username, password } = req.body;
-        if (!username || !password)
-            return returnRes_1.default.res400(res, "Missing username or password");
+        const { email, username, password } = req.body;
+        if (!email || !username || !password)
+            return returnRes_1.default.res400(res, "Missing email, username or password");
         // check exitsting user
         const user = yield users_1.default.findOne({ username });
         if (user)
             return returnRes_1.default.res400(res, "Username is Used");
         // All good
+        // register new user
         const hashedPassword = yield argon2_1.default.hash(password);
         const newUser = new users_1.default({ username, password: hashedPassword });
         yield newUser.save();
-        // return token
+        // create accesstoken and refreshtoken
         const token = (0, generateTokens_1.default)({ uId: newUser._id });
+        // create new profile
+        const newProfile = new profile_1.default({
+            id: newUser._id,
+            fullName: null,
+            phoneNumber: null,
+            dob: null,
+            email
+        });
+        yield newProfile.save();
+        // create new refreshtoken array
+        const newRefreshToken = new dbRefreshToken_1.default({
+            id: newUser._id,
+            refreshToken: [token.refreshToken]
+        });
+        yield newRefreshToken.save();
+        // return token
         returnRes_1.default.resCookie(res, token);
     })),
     login: (0, asyncWrapper_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -53,8 +72,19 @@ exports.authCtrl = {
         if (!passwordValid)
             return Res;
         const token = (0, generateTokens_1.default)({ uId: user._id });
+        yield dbRefreshToken_1.default.findOneAndUpdate({ id: user._id }, { $push: { refreshToken: token.refreshToken } });
         returnRes_1.default.resCookie(res, token);
     })),
     reqRefreshtoken: (0, asyncWrapper_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        const token = (0, generateTokens_1.default)({ uId: req.uId });
+        yield dbRefreshToken_1.default.findOne({ id: req.uId }).then((rel) => {
+            const hasRefreshToken = rel.refreshToken.includes(req.refreshToken);
+            if (hasRefreshToken) {
+                returnRes_1.default.resCookie(res, token);
+            }
+            else {
+                returnRes_1.default.res401(res);
+            }
+        });
     }))
 };
