@@ -1,5 +1,5 @@
 {
-  "name": "simple_api_server",
+  "name": "todo_api_server",
   "version": "1.0.0",
   "description": "dat.lt",
   "main": "dist/index.js",

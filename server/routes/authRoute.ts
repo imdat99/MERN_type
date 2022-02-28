@@ -1,5 +1,5 @@
 import express from 'express'
-import { authCtrl } from '../controller/authCtrl';
+import authCtrl from '../controller/authCtrl';
 import verifyCookie from '../middleware/verifyCookie';
 import verifyToken from '../middleware/verifyToken';
 

@@ -1,6 +1,7 @@
 import mongoose, { Schema, Types } from "mongoose";
 
 export interface RefreshTokens {
+    _id?: Types.ObjectId;
     id: Types.ObjectId;
     refreshToken: string[]
 }

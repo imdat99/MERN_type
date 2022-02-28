@@ -21,7 +21,9 @@ app.get('/', (req, res) => {
     res.json({ msg: 'chào' })
 })
 
-app.use('/api/auth', routes.authRouter);
+app.use('/api/v1/auth', routes.authRouter);
+app.use('/api/v1/todo', routes.todoRouter);
+app.use('/api/v1/user', routes.userRouter);
 
 //server listenning
 const PORT = process.env.PORT || 5000

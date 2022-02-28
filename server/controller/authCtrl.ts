@@ -1,15 +1,15 @@
 //Auth controller functions 
 import { Response } from "express"
+import { RequestCustom } from "../middleware/type";
 import argon2 from 'argon2'
 import users, { user } from "../models/users";
-import dbRefreshTokens, { RefreshTokens } from "../models/dbRefreshToken"
-import profiles, { profile } from "../models/profile";
-import generateTokens, { payload, token } from "../middleware/generateTokens";
-import { RequestCustom } from "../middleware/type";
+import dbRefreshTokens from "../models/dbRefreshToken"
+import profiles from "../models/profile";
+import generateTokens, { token } from "../middleware/generateTokens";
 import asyncWrapper from "../middleware/asyncWrapper";
 import returnRes from "../middleware/returnRes";
 
-export const authCtrl = {
+const authCtrl = {
     setAuth: asyncWrapper(async (req: RequestCustom, res: Response) => {
         // console.log(req)
         const user: user | null = await users.findById(req.uId).select('-password')
@@ -84,3 +84,5 @@ export const authCtrl = {
     })
 
 }
+
+export default authCtrl

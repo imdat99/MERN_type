@@ -1,6 +1,7 @@
 import mongoose, { Schema, Types } from "mongoose";
 
 export interface profile {
+    _id?: Types.ObjectId;
     id: Types.ObjectId;
     fullName: string;
     phoneNumber: string;

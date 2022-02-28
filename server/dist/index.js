@@ -21,7 +21,9 @@ app.use((0, cookie_parser_1.default)());
 app.get('/', (req, res) => {
     res.json({ msg: 'chào' });
 });
-app.use('/api/auth', routes_1.default.authRouter);
+app.use('/api/v1/auth', routes_1.default.authRouter);
+app.use('/api/v1/todo', routes_1.default.todoRouter);
+app.use('/api/v1/user', routes_1.default.userRouter);
 //server listenning
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

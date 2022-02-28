@@ -12,7 +12,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authCtrl = void 0;
 const argon2_1 = __importDefault(require("argon2"));
 const users_1 = __importDefault(require("../models/users"));
 const dbRefreshToken_1 = __importDefault(require("../models/dbRefreshToken"));
@@ -20,7 +19,7 @@ const profile_1 = __importDefault(require("../models/profile"));
 const generateTokens_1 = __importDefault(require("../middleware/generateTokens"));
 const asyncWrapper_1 = __importDefault(require("../middleware/asyncWrapper"));
 const returnRes_1 = __importDefault(require("../middleware/returnRes"));
-exports.authCtrl = {
+const authCtrl = {
     setAuth: (0, asyncWrapper_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
         // console.log(req)
         const user = yield users_1.default.findById(req.uId).select('-password');
@@ -88,3 +87,4 @@ exports.authCtrl = {
         returnRes_1.default.resCookie(res, token);
     }))
 };
+exports.default = authCtrl;
