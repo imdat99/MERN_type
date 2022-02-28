@@ -42,8 +42,6 @@ exports.authCtrl = {
         const hashedPassword = yield argon2_1.default.hash(password);
         const newUser = new users_1.default({ username, password: hashedPassword });
         yield newUser.save();
-        // create accesstoken and refreshtoken
-        const token = (0, generateTokens_1.default)({ uId: newUser._id });
         // create new profile
         const newProfile = new profile_1.default({
             id: newUser._id,
@@ -56,9 +54,11 @@ exports.authCtrl = {
         // create new refreshtoken array
         const newRefreshToken = new dbRefreshToken_1.default({
             id: newUser._id,
-            refreshToken: [token.refreshToken]
+            refreshToken: []
         });
         yield newRefreshToken.save();
+        // create accesstoken and refreshtoken
+        const token = (0, generateTokens_1.default)({ uId: newUser._id });
         // return token
         returnRes_1.default.resCookie(res, token);
     })),
@@ -72,19 +72,19 @@ exports.authCtrl = {
         if (!passwordValid)
             return Res;
         const token = (0, generateTokens_1.default)({ uId: user._id });
-        yield dbRefreshToken_1.default.findOneAndUpdate({ id: user._id }, { $push: { refreshToken: token.refreshToken } });
         returnRes_1.default.resCookie(res, token);
     })),
     reqRefreshtoken: (0, asyncWrapper_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        yield dbRefreshToken_1.default.findOneAndUpdate({ id: req.uId }, { $pull: { refreshToken: { $in: [req.refreshToken] } } });
         const token = (0, generateTokens_1.default)({ uId: req.uId });
-        yield dbRefreshToken_1.default.findOne({ id: req.uId }).then((rel) => {
-            const hasRefreshToken = rel.refreshToken.includes(req.refreshToken);
-            if (hasRefreshToken) {
-                returnRes_1.default.resCookie(res, token);
-            }
-            else {
-                returnRes_1.default.res401(res);
-            }
-        });
+        returnRes_1.default.resCookie(res, token);
+    })),
+    logout: (0, asyncWrapper_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        yield dbRefreshToken_1.default.findOneAndUpdate({ id: req.uId }, { $pull: { refreshToken: { $in: [req.refreshToken] } } });
+        const token = {
+            accessToken: '',
+            refreshToken: ''
+        };
+        returnRes_1.default.resCookie(res, token);
     }))
 };

@@ -1,7 +1,8 @@
 import jwt, { Secret } from "jsonwebtoken"
-import dbRefreshTokens, { RefreshTokens } from "../models/dbRefreshToken"
+import { Types } from "mongoose";
+import dbRefreshTokens from "../models/dbRefreshToken"
 
-type payload = string | object | Buffer
+export type payload = string | object | Buffer | Types.ObjectId | any
 
 export interface token {
     accessToken: string
@@ -16,6 +17,9 @@ const generateTokens = (payload: payload) => {
     const refreshToken = jwt.sign(payload, process.env.REFRESHTOKEN_TOKEN_SECRET as Secret, {
         expiresIn: '1h'
     })
+    // console.log(payload.id)
+    Promise.resolve(dbRefreshTokens.findOneAndUpdate({ id: payload.uId }, { $push: { refreshToken } }))
+
     return {
         accessToken,
         refreshToken

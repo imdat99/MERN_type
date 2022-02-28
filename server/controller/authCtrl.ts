@@ -4,7 +4,7 @@ import argon2 from 'argon2'
 import users, { user } from "../models/users";
 import dbRefreshTokens, { RefreshTokens } from "../models/dbRefreshToken"
 import profiles, { profile } from "../models/profile";
-import generateTokens from "../middleware/generateTokens";
+import generateTokens, { payload, token } from "../middleware/generateTokens";
 import { RequestCustom } from "../middleware/type";
 import asyncWrapper from "../middleware/asyncWrapper";
 import returnRes from "../middleware/returnRes";
@@ -30,8 +30,6 @@ export const authCtrl = {
         const hashedPassword = await argon2.hash(password);
         const newUser = new users({ username, password: hashedPassword });
         await newUser.save();
-        // create accesstoken and refreshtoken
-        const token = generateTokens({ uId: newUser._id })
 
         // create new profile
         const newProfile = new profiles({
@@ -45,9 +43,11 @@ export const authCtrl = {
         // create new refreshtoken array
         const newRefreshToken = new dbRefreshTokens({
             id: newUser._id,
-            refreshToken: [token.refreshToken]
+            refreshToken: []
         })
         await newRefreshToken.save()
+        // create accesstoken and refreshtoken
+        const token = generateTokens({ uId: newUser._id })
         // return token
         returnRes.resCookie(res, token)
 
@@ -62,25 +62,25 @@ export const authCtrl = {
         const passwordValid = await argon2.verify(user.password, password);
 
         if (!passwordValid) return Res
+
         const token = generateTokens({ uId: user._id })
-        await dbRefreshTokens.findOneAndUpdate({ id: user._id }, { $push: { refreshToken: token.refreshToken } })
 
         returnRes.resCookie(res, token)
     }),
 
     reqRefreshtoken: asyncWrapper(async (req: RequestCustom, res: Response) => {
-
+        await dbRefreshTokens.findOneAndUpdate({ id: req.uId }, { $pull: { refreshToken: { $in: [req.refreshToken] } } })
         const token = generateTokens({ uId: req.uId })
-        await dbRefreshTokens.findOne({ id: req.uId }).then((rel: RefreshTokens) => {
-            const hasRefreshToken: boolean = rel.refreshToken.includes(req.refreshToken as string)
-            if (hasRefreshToken) {
-                returnRes.resCookie(res, token)
-            }
-            else {
-                returnRes.res401(res)
-            }
-        })
-    })
+        returnRes.resCookie(res, token)
+    }),
 
+    logout: asyncWrapper(async (req: RequestCustom, res: Response) => {
+        await dbRefreshTokens.findOneAndUpdate({ id: req.uId }, { $pull: { refreshToken: { $in: [req.refreshToken] } } })
+        const token: token = {
+            accessToken: '',
+            refreshToken: ''
+        }
+        returnRes.resCookie(res, token)
+    })
 
 }

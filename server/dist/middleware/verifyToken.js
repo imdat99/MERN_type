@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const returnRes_1 = __importDefault(require("./returnRes"));
-const verfytoken = (req, res, next) => {
+const verifytoken = (req, res, next) => {
     const authHeader = req.header("authorization");
     const token = authHeader && authHeader.split(" ")[1];
     const refreshToken = req.cookies.MERN_refreshToken;
@@ -25,4 +25,4 @@ const verfytoken = (req, res, next) => {
         return returnRes_1.default.res403(res);
     }
 };
-exports.default = verfytoken;
+exports.default = verifytoken;
