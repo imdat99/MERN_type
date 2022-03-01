@@ -11,11 +11,9 @@ import returnRes from "../middleware/returnRes";
 
 const authCtrl = {
     setAuth: asyncWrapper(async (req: RequestCustom, res: Response) => {
-        // console.log(req)
         const user: user | null = await users.findById(req.uId).select('-password')
         if (!user) return returnRes.res400(res, "User not found")
         return returnRes.res200(res, user)
-        // res.json({ success: true, user })
     }),
 
     register: asyncWrapper(async (req: RequestCustom, res: Response) => {
@@ -56,12 +54,11 @@ const authCtrl = {
     login: asyncWrapper(async (req: RequestCustom, res: Response) => {
         const { username, password } = req.body
         const user: user | null = await users.findOne({ username })
-        const Res = () => returnRes.res400(res, "Incorrect username or password")
 
-        if (!user) return Res
+        if (!user) return returnRes.res400(res, "Incorrect username or password")
         const passwordValid = await argon2.verify(user.password, password);
 
-        if (!passwordValid) return Res
+        if (!passwordValid) return returnRes.res400(res, "Incorrect username or password")
 
         const token = generateTokens({ uId: user._id })
 

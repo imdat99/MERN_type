@@ -1,0 +1,15 @@
+.custom_btn {
+  min-width: 95px;
+}
+
+.custom_text_width {
+  min-width: 30px;
+  text-align: center;
+  display: flex;
+  height: 100%;
+}
+
+.site-card-wrapper {
+  padding: 30px;
+  background: #ececec;
+}

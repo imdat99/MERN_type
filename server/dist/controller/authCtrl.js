@@ -21,12 +21,10 @@ const asyncWrapper_1 = __importDefault(require("../middleware/asyncWrapper"));
 const returnRes_1 = __importDefault(require("../middleware/returnRes"));
 const authCtrl = {
     setAuth: (0, asyncWrapper_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        // console.log(req)
         const user = yield users_1.default.findById(req.uId).select('-password');
         if (!user)
             return returnRes_1.default.res400(res, "User not found");
         return returnRes_1.default.res200(res, user);
-        // res.json({ success: true, user })
     })),
     register: (0, asyncWrapper_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { email, username, password } = req.body;
@@ -64,12 +62,11 @@ const authCtrl = {
     login: (0, asyncWrapper_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { username, password } = req.body;
         const user = yield users_1.default.findOne({ username });
-        const Res = () => returnRes_1.default.res400(res, "Incorrect username or password");
         if (!user)
-            return Res;
+            return returnRes_1.default.res400(res, "Incorrect username or password");
         const passwordValid = yield argon2_1.default.verify(user.password, password);
         if (!passwordValid)
-            return Res;
+            return returnRes_1.default.res400(res, "Incorrect username or password");
         const token = (0, generateTokens_1.default)({ uId: user._id });
         returnRes_1.default.resCookie(res, token);
     })),
