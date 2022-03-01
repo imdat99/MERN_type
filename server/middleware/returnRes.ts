@@ -13,7 +13,7 @@ const returnRes = {
 
     res200: (res: Response, results?: any, msg?: string) => res.status(200).json({ success: true, ...results, msg }),
 
-    resCookie: (res: Response, token: token, msg?: string) => {
+    resCookie: (res: Response, token: token, results?: any, msg?: string) => {
         res.cookie("MERN_refreshToken", token.refreshToken, {
             httpOnly: true,
             sameSite: "strict",
@@ -22,6 +22,7 @@ const returnRes = {
         })
         res.status(200).json({
             success: true,
+            results,
             msg,
             accesstoken: token.accessToken
         })

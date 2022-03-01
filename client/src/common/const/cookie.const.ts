@@ -1,0 +1,1 @@
+export const REFRESH_TOKEN_COOKIES = "MERN_refreshToken";

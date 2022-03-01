@@ -7,7 +7,7 @@ const returnRes = {
     res404: (res) => res.status(404).json({ success: false, msg: "Not found" }),
     res500: (res) => res.status(500).json({ success: false, msg: "Internal server error" }),
     res200: (res, results, msg) => res.status(200).json(Object.assign(Object.assign({ success: true }, results), { msg })),
-    resCookie: (res, token, msg) => {
+    resCookie: (res, token, results, msg) => {
         res.cookie("MERN_refreshToken", token.refreshToken, {
             httpOnly: true,
             sameSite: "strict",
@@ -16,6 +16,7 @@ const returnRes = {
         });
         res.status(200).json({
             success: true,
+            results,
             msg,
             accesstoken: token.accessToken
         });

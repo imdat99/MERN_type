@@ -8,7 +8,7 @@ import ListTodo from './components/ListTodo'
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Content } from 'antd/lib/layout/layout'
-import TodoCtrl from './components/todoCtrl'
+import TodoCtrl from './components/TodoCtrl'
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 function App() {
