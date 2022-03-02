@@ -10,12 +10,12 @@ import { getTodos } from './todoReducer'
 
 export interface TodoState<T> {
     current: T[],
-    loadding: boolean,
+    Loading: boolean,
     error: string,
 }
 const initialState: TodoState<any> = {
     current: [],
-    loadding: false,
+    Loading: false,
     error: ''
 }
 
@@ -26,14 +26,14 @@ export const todoSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getTodos.pending, (state) => {
-                state.loadding = true
+                state.Loading = true
             })
             .addCase(getTodos.fulfilled, (state, action) => {
-                state.loadding = false
+                state.Loading = false
                 state.current = [...state.current, ...action.payload]
             })
             .addCase(getTodos.rejected, (state) => {
-                state.loadding = false
+                state.Loading = false
             })
     }
 })

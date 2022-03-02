@@ -4,7 +4,7 @@ import { RequestCustom } from "../middleware/type";
 import argon2 from 'argon2'
 import users, { user } from "../models/users";
 import dbRefreshTokens from "../models/dbRefreshToken"
-import profiles from "../models/profile";
+import profiles from "../models/profiles";
 import generateTokens, { token } from "../middleware/generateTokens";
 import asyncWrapper from "../middleware/asyncWrapper";
 import returnRes from "../middleware/returnRes";
@@ -47,7 +47,7 @@ const authCtrl = {
         // create accesstoken and refreshtoken
         const token = generateTokens({ uId: newUser._id })
         // return token
-        returnRes.resCookie(res, token, { username })
+        returnRes.resCookie(res, token)
 
     }),
 
@@ -62,14 +62,13 @@ const authCtrl = {
 
         const token = generateTokens({ uId: user._id })
 
-        returnRes.resCookie(res, token, { username })
+        returnRes.resCookie(res, token)
     }),
 
     reqRefreshtoken: asyncWrapper(async (req: RequestCustom, res: Response) => {
         await dbRefreshTokens.findOneAndUpdate({ id: req.uId }, { $pull: { refreshToken: { $in: [req.refreshToken] } } })
-        const { username } = await users.findOne({ _id: req.uId })
         const token = generateTokens({ uId: req.uId })
-        returnRes.resCookie(res, token, { username })
+        returnRes.resCookie(res, token)
     }),
 
     logout: asyncWrapper(async (req: RequestCustom, res: Response) => {

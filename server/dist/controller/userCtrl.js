@@ -15,22 +15,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const asyncWrapper_1 = __importDefault(require("../middleware/asyncWrapper"));
 const returnRes_1 = __importDefault(require("../middleware/returnRes"));
 const dbRefreshToken_1 = __importDefault(require("../models/dbRefreshToken"));
-const profile_1 = __importDefault(require("../models/profile"));
+const profiles_1 = __importDefault(require("../models/profiles"));
 const todos_1 = __importDefault(require("../models/todos"));
 const users_1 = __importDefault(require("../models/users"));
 const userCtrl = {
     getInfo: (0, asyncWrapper_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        const results = yield profile_1.default.findOne({ id: req.uId });
-        returnRes_1.default.res200(res, { results });
+        const results = yield profiles_1.default.findOne({ id: req.uId });
+        const { username } = yield users_1.default.findOne({ _id: req.uId });
+        returnRes_1.default.res200(res, { results: { profile: results, username } });
     })),
     updateInfo: (0, asyncWrapper_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { fullName, phoneNumber, dob, email } = req.body;
-        const results = yield profile_1.default.findOneAndUpdate({ id: req.uId }, { fullName, phoneNumber, dob, email }, { new: true });
+        const results = yield profiles_1.default.findOneAndUpdate({ id: req.uId }, { fullName, phoneNumber, dob, email }, { new: true });
         returnRes_1.default.res200(res, { results });
     })),
     deleteUser: (0, asyncWrapper_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
         yield users_1.default.findByIdAndRemove({ _id: req.uId });
-        yield profile_1.default.findOneAndRemove({ id: req.uId });
+        yield profiles_1.default.findOneAndRemove({ id: req.uId });
         yield dbRefreshToken_1.default.findOneAndRemove({ id: req.uId });
         yield todos_1.default.deleteMany({ id: req.uId });
         returnRes_1.default.res200(res);

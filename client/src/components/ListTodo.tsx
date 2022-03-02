@@ -9,7 +9,7 @@ const data = [
 
 const ListTodo: FC = () => {
     // const data = useAppSelector((state: RootState) => state.counter.value)
-    const todoLoadding = useAppSelector((state) => state.todo.current)
+    const todoLoading = useAppSelector((state) => state.todo.current)
     console.log('List render');
     return (
         <>
@@ -18,7 +18,7 @@ const ListTodo: FC = () => {
                 header={<div>Header</div>}
                 footer={<div>Footer</div>}
                 bordered
-                dataSource={todoLoadding}
+                dataSource={todoLoading}
                 renderItem={item => (
                     <List.Item>
                         <Typography.Text mark>[ITEMb]</Typography.Text> {item.title}

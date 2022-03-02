@@ -14,7 +14,17 @@ const routes_1 = __importDefault(require("./routes"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
-app.use((0, cors_1.default)());
+const corsOptions = {
+    //To allow requests from client
+    origin: [
+        "http://localhost:3000",
+        "http://127.0.0.1",
+        "http://104.142.122.231",
+    ],
+    credentials: true,
+    exposedHeaders: ["set-cookie"],
+};
+app.use((0, cors_1.default)(corsOptions));
 app.use((0, morgan_1.default)('dev'));
 app.use((0, cookie_parser_1.default)());
 //Routes

@@ -2,9 +2,9 @@ import mongoose, { Schema, Types } from "mongoose";
 
 export interface todoStatus {
     _id?: Types.ObjectId;
-    id: Types.ObjectId;
-    title: string;
-    desc: string;
+    id?: Types.ObjectId;
+    title?: string;
+    desc?: string;
 }
 
 const todoStatusSchema = new Schema({

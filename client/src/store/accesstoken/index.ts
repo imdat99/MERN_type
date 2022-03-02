@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface accessTokenState {
-    value: string
+    value: string,
+    expires: string,
 }
 
 const initialState: accessTokenState = {
     value: '',
+    expires: '2d'
 }
 
 export const tokenSlice = createSlice({

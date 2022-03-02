@@ -12,10 +12,10 @@ const TodoCtrl: FC = () => {
     const dispatch = useAppDispatch()
 
     const { getTodos } = bindActionCreators(thunkAction, dispatch)
-    const todoLoadding = useAppSelector((state) => state.todo.loadding)
+    const todoLoading = useAppSelector((state) => state.todo.Loading)
     return (
         <Button size='large' type={'default'} className='custom_btn' onClick={() => getTodos()}>
-            {todoLoadding === true ? <Spin indicator={antIcon} /> : 'Get todo'}
+            {todoLoading === true ? <Spin indicator={antIcon} /> : 'Get todo'}
         </Button>
     )
 }
