@@ -7,13 +7,13 @@
 .loginContent {
     margin: auto;
     width: 400px;
-    padding: 30px 20px 10px;
+    padding: 30px 30px 10px;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
 }
 
 .loginForm {
-    width: 90%;
+    /* width: 90%; */
 }
 
 .loginBtn:not(:last-child) {

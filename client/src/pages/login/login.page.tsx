@@ -30,8 +30,8 @@ const LoginPage = () => {
 
                         <Form
                             name="basic"
-                            labelCol={{ span: 8 }}
-                            wrapperCol={{ span: 16 }}
+                            labelCol={{ span: 6 }}
+                            wrapperCol={{ span: 18 }}
                             initialValues={{ remember: true }}
                             onFinish={onFinish}
                             onFinishFailed={onFinishFailed}
@@ -65,13 +65,13 @@ const LoginPage = () => {
                             <Form.Item
                                 name="remember"
                                 valuePropName="checked"
-                                wrapperCol={{ offset: 8, span: 16 }}
+                                wrapperCol={{ offset: 6, span: 16 }}
                                 style={!isReg ? {} : { display: 'none' }}
                             >
                                 <Checkbox>Remember me</Checkbox>
                             </Form.Item>
 
-                            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                            <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
                                 <Button type="primary" htmlType="submit" className='loginBtn'>
                                     {!isReg ? 'Login' : 'Submit'}
                                 </Button>
@@ -79,7 +79,14 @@ const LoginPage = () => {
                                     {!isReg ? 'Register' : 'Cancel'}
                                 </Button>
                             </Form.Item>
-
+                            <Form.Item
+                                wrapperCol={{ offset: 6, span: 16 }}
+                                style={!isReg ? {} : { display: 'none' }}
+                            >
+                                <Button type='link' className='loginBtn'>
+                                    {!isReg ? 'Forgot password' : ''}
+                                </Button>
+                            </Form.Item>
 
                         </Form>
                     </div>

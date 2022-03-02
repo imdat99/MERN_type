@@ -19,11 +19,11 @@
 
 .userIcon {
     margin: auto 0;
-    background-color: #f1f1f1;
-    width: 40px;
-    height: 40px;
+    /* background-color: #f1f1f1; */
+    /* width: 40px; */
+    /* height: 40px; */
     display: flex;
-    border-radius: 999px;
+    /* border-radius: 999px; */
 }
 
 .icon_content {

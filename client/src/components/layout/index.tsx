@@ -1,5 +1,5 @@
 import { UserOutlined } from '@ant-design/icons';
-import { Layout, Menu, Breadcrumb, Space } from 'antd';
+import { Layout, Menu, Breadcrumb, Space, Avatar } from 'antd';
 import { ReactChild, ReactChildren, FC } from 'react';
 import './layout.css'
 const { Header, Content, Footer } = Layout;
@@ -13,7 +13,10 @@ const AppLayout: FC<AppLayoutProps> = ({ children }) => {
             <Header>
                 <Space align='center' size={'large'} className="headerSpace">
                     <div className="logo" />
-                    <div className='userIcon'><UserOutlined className="icon_content" /></div>
+                    <div className='userIcon'>
+                        {/* <UserOutlined className="icon_content" /> */}
+                        <Avatar size={40} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
+                    </div>
                 </Space>
             </Header>
             <Content style={{ padding: '0 50px' }} className="AppLayoutContent">
