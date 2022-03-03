@@ -1,3 +1,4 @@
+import { PoweroffOutlined } from "@ant-design/icons"
 import { Button, PageHeader } from "antd"
 
 const AcountHeader = () => {
@@ -9,10 +10,15 @@ const AcountHeader = () => {
                 title="Account"
                 subTitle="Account detail"
                 extra={[
-                    <Button key="3">Operation</Button>,
-                    <Button key="2">Operation</Button>,
-                    <Button key="1" type="primary">
-                        Primary
+                    <Button key="2">Change Password</Button>,
+                    <Button
+                        key="1"
+                        type="primary"
+                        danger
+                        icon={<PoweroffOutlined />}
+                    // loading={true}
+                    >
+                        Logout
                     </Button>,
                 ]}
             >

@@ -14,7 +14,7 @@ const AppLayout: FC<AppLayoutProps> = ({ children, isAccount }) => {
     return (
         <Layout className="layout">
             {isAccount ? <AcountHeader /> : <AppHeader />}
-            <Content style={{ padding: '0 50px' }} className="AppLayoutContent">
+            <Content className="AppLayoutContent">
                 {children}
             </Content>
             <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>

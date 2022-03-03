@@ -18,3 +18,9 @@
     border: none;
     cursor: pointer;
 }
+
+@media screen and (max-width: 768px) {
+    .account_content_title {
+        min-width: 120px;
+    }
+}

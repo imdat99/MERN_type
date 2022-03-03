@@ -1,5 +1,6 @@
+import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
 import { Form, Input, Button, Checkbox, message, Spin } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './login.css'
 import { handleLogin, handleResgister } from './login.handle';
 
@@ -10,9 +11,14 @@ const LoginPage = () => {
     const swapPage = () => {
         setisReg(!isReg)
     }
+    const [form] = Form.useForm()
+    useEffect(() => {
+        form.resetFields()
+    }, [isReg])
 
     const onFinish = (values: any) => {
         setLoading(true)
+        console.log(values);
         if (!isReg) handleLogin({ ...values }).finally(() => setLoading(false))
         else handleResgister({ ...values }).finally(() => setLoading(false))
     };
@@ -27,67 +33,52 @@ const LoginPage = () => {
             <div className="loginContent">
                 <Spin spinning={isLoading} tip="Loading..." size="large">
                     <div className="loginForm">
-
                         <Form
-                            name="basic"
-                            labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 18 }}
+                            form={form}
+                            name="normal_login"
+                            className="login-form"
                             initialValues={{ remember: true }}
                             onFinish={onFinish}
-                            onFinishFailed={onFinishFailed}
-                            autoComplete="off"
                         >
                             {isReg ?
                                 <Form.Item
-                                    label="email"
                                     name="email"
                                     rules={[{ required: true, message: 'Please input your email!' }]}
                                 >
-                                    <Input />
+                                    <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email" />
                                 </Form.Item>
                                 : ''}
                             <Form.Item
-                                label="Username"
                                 name="username"
-                                rules={[{ required: true, message: 'Please input your username!' }]}
+                                rules={[{ required: true, message: 'Please input your Username!' }]}
                             >
-                                <Input />
+                                <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
                             </Form.Item>
-
                             <Form.Item
-                                label="Password"
                                 name="password"
-                                rules={[{ required: true, message: 'Please input your password!' }]}
+                                rules={[{ required: true, message: 'Please input your Password!' }]}
                             >
-                                <Input.Password />
+                                <Input
+                                    prefix={<LockOutlined className="site-form-item-icon" />}
+                                    type="password"
+                                    placeholder="Password"
+                                />
+                            </Form.Item>
+                            <Form.Item style={!isReg ? {} : { display: 'none' }}>
+                                <Form.Item name="remember" valuePropName="checked" noStyle>
+                                    <Checkbox>Remember me</Checkbox>
+                                </Form.Item>
+                                <Button type='link' size='small' className="login-form-forgot" href="">
+                                    Forgot password
+                                </Button>
                             </Form.Item>
 
-                            <Form.Item
-                                name="remember"
-                                valuePropName="checked"
-                                wrapperCol={{ offset: 6, span: 16 }}
-                                style={!isReg ? {} : { display: 'none' }}
-                            >
-                                <Checkbox>Remember me</Checkbox>
-                            </Form.Item>
-
-                            <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
-                                <Button type="primary" htmlType="submit" className='loginBtn'>
+                            <Form.Item>
+                                <Button type="primary" htmlType="submit" className="login-form-button">
                                     {!isReg ? 'Login' : 'Submit'}
                                 </Button>
-                                <Button htmlType="button" className='loginBtn' onClick={swapPage}>
-                                    {!isReg ? 'Register' : 'Cancel'}
-                                </Button>
+                                Or <Button size='small' type='link' onClick={swapPage}>{!isReg ? 'register now!' : 'Login'}</Button>
                             </Form.Item>
-                            <Form.Item
-                                wrapperCol={{ offset: 6, span: 16 }}
-                                style={!isReg ? {} : { display: 'none' }}
-                            >
-                                <Button type='link' className='loginBtn'>
-                                    {!isReg ? 'Forgot password' : ''}
-                                </Button>
-                            </Form.Item>
-
                         </Form>
                     </div>
                 </Spin>

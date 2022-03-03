@@ -6,12 +6,15 @@
 
 .loginContent {
     margin: auto;
-    width: 400px;
+    width: fit-content;
     padding: 30px 30px 10px;
-    border-radius: 10px;
+    /* border-radius: 10px; */
     box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
 }
 
+.loginForm {
+    width: 300px;
+}
 
 .loginBtn:not(:last-child) {
     margin-right: 10px;
@@ -19,4 +22,24 @@
 
 .loginBtn {
     min-width: 85px;
+}
+
+.login-form {
+    max-width: 300px;
+}
+
+.login-form-forgot {
+    float: right;
+}
+
+.ant-col-rtl .login-form-forgot {
+    float: left;
+}
+
+.login-form-button {
+    width: 100%;
+}
+
+.site-form-item-icon {
+    color: #ababab;
 }

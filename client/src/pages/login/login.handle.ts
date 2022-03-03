@@ -16,13 +16,12 @@ const handleLogin = async (loginData: LoginData) => {
             store.dispatch(setToken(response.accesstoken))
         })
         .catch((e) => {
-            message.error("Incorrect username or password");
-            console.log(e)
+            message.error(e.message);
+            console.log(e.message)
         })
 }
 
 const handleResgister = async (regData: RegData) => {
-    console.log(regData)
     await client.post(
         REGISTER_ENDPOINT, regData
     ).then(res => res.data)
@@ -30,8 +29,9 @@ const handleResgister = async (regData: RegData) => {
             message.success("register succeeded!")
             store.dispatch(setToken(response.accesstoken))
         })
-        .catch((_) => {
-            message.error("Username is Used!");
+        .catch((e) => {
+            message.error(e.message);
+            console.log(e.message)
         })
 }
 
