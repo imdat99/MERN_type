@@ -18,3 +18,9 @@
     border: none;
     cursor: pointer;
 }
+
+.descText {
+    max-width: 182px;
+    word-wrap: break-word;
+    text-align: justify;
+}

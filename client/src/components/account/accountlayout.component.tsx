@@ -9,20 +9,9 @@ const AccountLayout = () => {
     return (
         <Space size={25} align={'start'} direction="vertical">
             <div className="accountdetail">
-                {/* <Space align='baseline' className='account_content'>
+                <Space align='baseline' className='account_content'>
                     <Typography.Title level={5} className="account_content_title">Personal name: </Typography.Title>
-                    <EdiText
-                        type="text"
-                        saveButtonContent={<CheckOutlined style={{ color: '#bababa' }} />}
-                        cancelButtonContent={<CloseOutlined style={{ color: '#bababa' }} />}
-                        editButtonContent={<EditOutlined style={{ color: '#bababa' }} />}
-                        saveButtonClassName="custom-button"
-                        editButtonClassName="custom-button"
-                        cancelButtonClassName="custom-button"
-                        value="Lê Thành Đạt"
-                        onSave={() => { }}
-                        hideIcons={true}
-                    />
+                    <EditableText value="Lê Thành Đạt" editClassName="form-control" />
                 </Space>
                 <Space align='baseline' className='account_content'>
                     <Typography.Title level={5} className="account_content_title">Date of birth: </Typography.Title>
@@ -31,39 +20,17 @@ const AccountLayout = () => {
 
                 <Space align='baseline' className='account_content'>
                     <Typography.Title level={5} className="account_content_title">Email: </Typography.Title>
-                    <EdiText
-                        type="email"
-                        saveButtonContent={<CheckOutlined style={{ color: '#bababa' }} />}
-                        cancelButtonContent={<CloseOutlined style={{ color: '#bababa' }} />}
-                        editButtonContent={<EditOutlined style={{ color: '#bababa' }} />}
-                        saveButtonClassName="custom-button"
-                        editButtonClassName="custom-button"
-                        cancelButtonClassName="custom-button"
-                        value="imdat2999@gmail.com"
-                        onSave={() => { }}
-                        hideIcons={true}
-                    />
+                    <EditableText value="imdat2999@gmail.com" editClassName="form-control" />
                 </Space>
                 <Space align='start' className='account_content'>
                     <Typography.Title level={5} className="account_content_title">Description: </Typography.Title>
-                    <EdiText
-                        type="text"
-                        saveButtonContent={<CheckOutlined style={{ color: '#bababa' }} />}
-                        cancelButtonContent={<CloseOutlined style={{ color: '#bababa' }} />}
-                        editButtonContent={<EditOutlined style={{ color: '#bababa' }} />}
-                        saveButtonClassName="custom-button"
-                        editButtonClassName="custom-button"
-                        cancelButtonClassName="custom-button"
-                        value="Why, Mr. Anderson? Why? Why do you persist?"
-                        onSave={() => { }}
-                        hideIcons={true}
-                    />
+                    <EditableText mod='textarea' textClassName="descText" value="không cố gì hết" editClassName="form-control" />
                 </Space>
                 <Space align='baseline' className='account_content'>
 
                     <Button type="primary">Primary Button</Button>
-                </Space> */}
-                <EditableText mod='textarea' value="Hello word!" editClassName="form-control" />
+                </Space>
+                {/* <EditableText mod='textarea' value="Hello word!" editClassName="form-control" /> */}
             </div>
         </Space>
     )

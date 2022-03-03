@@ -52,6 +52,7 @@
 
 // export default EditableText
 
+import { EditOutlined } from '@ant-design/icons'
 import { Input, Typography } from 'antd'
 import { FC, useState } from 'react'
 
@@ -82,6 +83,7 @@ const EditableText: FC<Props> = (props) => {
         state.edit === true &&
         (state.mod !== 'textarea' ?
             <Input
+                size='small'
                 name={state.name}
                 type={state.type}
                 value={state.value}
@@ -100,7 +102,7 @@ const EditableText: FC<Props> = (props) => {
                     setState({ ...state, edit: false })
                 }}
                 onKeyUp={event => {
-                    if (event.key === 'Escape') {
+                    if (event.key === 'Escape' || event.key === 'Enter') {
                         setState({ ...state, edit: false, value: state.backup })
                     }
                 }}
@@ -111,6 +113,8 @@ const EditableText: FC<Props> = (props) => {
                 value={state.value}
                 className={state.editClassName}
                 autoFocus
+                size='small'
+                autoSize={true}
                 onFocus={event => {
                     const value = event.target.value
                     event.target.value = ''
@@ -130,10 +134,11 @@ const EditableText: FC<Props> = (props) => {
                 }}
             />)
         ||
-        <Typography.Text className={state.editClassName} onClick={event => {
+        <Typography.Text className={state.textClassName} onClick={event => {
             setState({ ...state, edit: state.edit !== true })
         }}>
             {state.value}
+            <EditOutlined style={{ color: '#bababa', marginLeft: '10px' }} />
         </Typography.Text>
     )
 }
