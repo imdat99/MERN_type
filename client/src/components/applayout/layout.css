@@ -19,11 +19,7 @@
 
 .userIcon {
     margin: auto 0;
-    /* background-color: #f1f1f1; */
-    /* width: 40px; */
-    /* height: 40px; */
     display: flex;
-    /* border-radius: 999px; */
 }
 
 .icon_content {
@@ -35,4 +31,6 @@
 
 .AppLayoutContent {
     min-height: calc(100vh - 134px);
+    /* min-width: 768px; */
+    overflow-x: auto;
 }

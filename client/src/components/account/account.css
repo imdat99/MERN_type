@@ -1,0 +1,20 @@
+.accountdetail {
+    background: #fff;
+    max-width: 500px;
+    margin-top: 30px;
+    padding: 20px;
+}
+
+.account_content {
+    width: 100%;
+}
+
+.account_content_title {
+    min-width: 200px;
+}
+
+.custom-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}

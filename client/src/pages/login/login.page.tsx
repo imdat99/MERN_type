@@ -19,7 +19,7 @@ const LoginPage = () => {
 
     const onFinishFailed = (errorInfo: any) => {
         // console.log('Failed:', errorInfo);
-        message.error('Không đăng nhập được, đ hiểu kiểu gì luôn :(')
+        message.error('Không đăng nhập được!')
     };
 
     return (

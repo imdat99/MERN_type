@@ -1,0 +1,9 @@
+.section_content {
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.draggableContent:not(:last-child) {
+    margin-bottom: 10px;
+}

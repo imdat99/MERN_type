@@ -1,6 +1,6 @@
 const mockData = [
     {
-        id: '11',
+        id: 'READY',
         title: ' 📃 To do',
         tasks: [
             {
@@ -18,7 +18,7 @@ const mockData = [
         ]
     },
     {
-        id: '12',
+        id: 'PROCESSING',
         title: ' ✏️ In progress',
         tasks: [
             {
@@ -32,12 +32,23 @@ const mockData = [
         ]
     },
     {
-        id: '13',
+        id: 'COMPLETED',
         title: ' ✔️ Completed',
         tasks: [
             {
                 id: '131',
                 title: 'Learn HTML'
+            }
+        ]
+    }
+    ,
+    {
+        id: 'SUSPEND',
+        title: ' 🛑 suspend',
+        tasks: [
+            {
+                id: '141',
+                title: 'Learn BKHN'
             }
         ]
     }

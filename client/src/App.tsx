@@ -8,11 +8,15 @@ import { useAppDispatch, useAppSelector } from './store'
 import { setToken } from './store/accesstoken'
 import { setUser } from './store/user'
 import './App.css'
-import AppLayout from './components/layout'
+import AppLayout from './components/applayout/appLayout.component'
 import LoginPage from './pages/login/login.page'
-import TaskContainer from './pages/todotask/tasks.page'
+import TaskContainer from './components/todolayout/todolayout.component'
+import AddTodo from './components/addtodo/addtodo.component'
+import AccountPage from './pages/account/account.page'
+import AccountLayout from './components/account/accountlayout.component'
 
 function App() {
+  // const [modal, setmodal] = useState(true)
   // const [Loading, setLoading] = useState(true)
   // const token = useAppSelector(state => state.token.value)
   // const user = useAppSelector(state => state.user)
@@ -41,10 +45,15 @@ function App() {
   //   )
   // }
   return (
-    // <AppLayout >
-    //   <div>ahihi</div>
-    // </AppLayout>
-    <TaskContainer />
+    <>
+      {/* <AccountPage /> */}
+      <AppLayout isAccount={true}>
+        {/* <TaskContainer /> */}
+        <AccountLayout />
+      </AppLayout>
+      {/* {modal ? <AddTodo /> : ''} */}
+    </>
+
   )
   // return (
   //   <LoginPage />
