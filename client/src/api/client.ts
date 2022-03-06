@@ -19,6 +19,7 @@ const getAccessToken = async () => {
         await axios.get(REFRESH_TOKEN_ENDPOINT, { withCredentials: true })
             .then(res => res.data)
             .then((res) => {
+                localStorage.setItem(REFRESH_TOKEN, res.refreshToken)
                 store.dispatch(setToken(res.accesstoken))
             })
             .catch(err => {
@@ -30,7 +31,7 @@ const getAccessToken = async () => {
 
 const client = axios.create({
     withCredentials: true,
-    baseURL: "http://localhost:5000//api/v1",
+    baseURL: "https://glacial-oasis-31254.herokuapp.com/",
     headers,
 })
 
