@@ -1,5 +1,6 @@
 import express from 'express'
 import userCtrl from '../controller/userCtrl';
+// import verifyCookie from '../middleware/verifyCookie';
 import verifyToken from '../middleware/verifyToken';
 
 const router = express.Router()

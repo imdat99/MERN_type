@@ -1,16 +1,15 @@
-// import dotenv from 'dotenv'
-import { bindActionCreators } from '@reduxjs/toolkit'
 import axios from 'axios'
 import Cookie from 'js-cookie'
 import { REFRESH_TOKEN_COOKIES } from '../common/const/cookie.const'
 import { REFRESH_TOKEN_ENDPOINT } from '../common/const/endpoint.const'
-import { setToken, tokenSlice } from '../store/accesstoken'
-import store, { useAppDispatch, useAppSelector } from '../store/index'
+import { setToken } from '../store/accesstoken'
+import store from '../store/index'
 
 
 // dotenv.config()
 
 const headers = {
+    crossDomain: true,
     Accept: "application/json; charset=utf-8",
     "content-type": "application/json"
 }
@@ -18,12 +17,16 @@ const headers = {
 const getAccessToken = async () => {
     const refreshToken = Cookie.get(REFRESH_TOKEN_COOKIES)
     if (refreshToken) {
-        const response = await axios.get(REFRESH_TOKEN_ENDPOINT, { withCredentials: true })
+        await axios.get(REFRESH_TOKEN_ENDPOINT, { withCredentials: true })
             .then(res => res.data)
-            .catch(err => null)
-        store.dispatch(setToken(response?.accesstoken))
-        return response.accesstoken
-    }
+            .then((res) => {
+                store.dispatch(setToken(res.accesstoken))
+            })
+            .catch(err => {
+                if (err.response.status === 403) Cookie.remove(REFRESH_TOKEN_COOKIES)
+            }
+            )
+    } else store.dispatch(setToken(''))
 }
 
 const client = axios.create({
@@ -49,13 +52,16 @@ client.interceptors.response.use(
     },
     async (error: any) => {
         const originalRequest = error.config
-        if (error?.response?.status === 401 && !originalRequest._retry) {
+        if (error.response?.status === 401 || error.response?.status === 403 && !originalRequest._retry) {
             originalRequest._retry = true
-            const token = await getAccessToken()
+            await getAccessToken()
+            const token = store.getState().token.value
             axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            if (token !== '') return client(originalRequest);
         }
         return Promise.reject(error)
     }
 )
+
 
 export default client

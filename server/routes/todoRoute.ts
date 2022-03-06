@@ -6,7 +6,7 @@ import verifyToken from '../middleware/verifyToken';
 const router = express.Router()
 
 router.get('/', verifyToken, verifyParams, todoCtrl.getTodos)
-router.post('/', verifyToken, todoCtrl.addTodos)
+router.post('/', verifyToken, todoCtrl.addTodo)
 router.put('/:todoId', verifyToken, todoCtrl.updateTodos)
 router.delete('/:todoId', verifyToken, todoCtrl.deleteTodos)
 

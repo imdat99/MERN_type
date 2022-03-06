@@ -8,16 +8,15 @@ const returnRes_1 = __importDefault(require("./returnRes"));
 const verifytoken = (req, res, next) => {
     const authHeader = req.header("authorization");
     const token = authHeader && authHeader.split(" ")[1];
-    const refreshToken = req.cookies.MERN_refreshToken;
+    // const refreshToken = req.cookies.MERN_refreshToken
     if (!token)
         return returnRes_1.default.res401(res);
-    if (!refreshToken)
-        return returnRes_1.default.res401(res);
+    // if (!refreshToken) return returnRes.res401(res)
     try {
         const payload = jsonwebtoken_1.default.verify(token, process.env.ACCESTOKEN_TOKEN_SECRET);
-        jsonwebtoken_1.default.verify(refreshToken, process.env.REFRESHTOKEN_TOKEN_SECRET);
+        // jwt.verify(refreshToken, process.env.REFRESHTOKEN_TOKEN_SECRET as Secret) as any
         req.uId = payload.uId;
-        req.refreshToken = refreshToken;
+        // req.refreshToken = refreshToken
         next();
     }
     catch (err) {

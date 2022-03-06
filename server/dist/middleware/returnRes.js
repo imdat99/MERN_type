@@ -9,7 +9,7 @@ const returnRes = {
     res200: (res, results, msg) => res.status(200).json(Object.assign(Object.assign({ success: true }, results), { msg })),
     resCookie: (res, token, results, msg) => {
         res.cookie("MERN_refreshToken", token.refreshToken, {
-            httpOnly: true,
+            httpOnly: false,
             sameSite: "strict",
             secure: false,
             path: '/'

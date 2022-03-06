@@ -17,11 +17,12 @@ export const tokenSlice = createSlice({
         setToken: (state, action: PayloadAction<string>) => {
             state.value = action.payload
         },
+        reset: () => initialState
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { setToken } = tokenSlice.actions
+export const { setToken, reset } = tokenSlice.actions
 
 const tokenReducer = tokenSlice.reducer
 export default tokenReducer

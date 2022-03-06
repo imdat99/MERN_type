@@ -14,6 +14,7 @@ const verifyCookie = async (req: RequestCustom, res: Response, next: NextFunctio
         req.refreshToken = refreshToken
         await dbRefreshTokens.findOne({ id: req.uId }).then((rel: RefreshTokens) => {
             // console.log(rel)
+
             const hasRefreshToken: boolean = rel?.refreshToken.includes(refreshToken as string) || false
             if (!hasRefreshToken) {
                 returnRes.res401(res)

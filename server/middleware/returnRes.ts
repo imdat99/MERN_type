@@ -15,7 +15,7 @@ const returnRes = {
 
     resCookie: (res: Response, token: token, results?: any, msg?: string) => {
         res.cookie("MERN_refreshToken", token.refreshToken, {
-            httpOnly: true,
+            httpOnly: false,
             sameSite: "strict",
             secure: false,
             path: '/'

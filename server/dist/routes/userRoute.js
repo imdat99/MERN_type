@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const userCtrl_1 = __importDefault(require("../controller/userCtrl"));
+// import verifyCookie from '../middleware/verifyCookie';
 const verifyToken_1 = __importDefault(require("../middleware/verifyToken"));
 const router = express_1.default.Router();
 router.get('/', verifyToken_1.default, userCtrl_1.default.getInfo);

@@ -19,7 +19,7 @@ const todoCtrl = {
         returnRes.res200(res, { results: todosData })
     }),
 
-    addTodos: asyncWrapper(async (req: RequestCustom, res: Response) => {
+    addTodo: asyncWrapper(async (req: RequestCustom, res: Response) => {
         const { title, desc, status } = req.body
         const newTodo = new todos({ id: req.uId, title, desc, status })
         await newTodo.save()

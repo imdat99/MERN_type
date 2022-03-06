@@ -15,7 +15,7 @@ const generateTokens = (payload: payload) => {
     })
 
     const refreshToken = jwt.sign(payload, process.env.REFRESHTOKEN_TOKEN_SECRET as Secret, {
-        expiresIn: '1h'
+        // expiresIn: '1d'
     })
     // console.log(payload.id)
     Promise.resolve(dbRefreshTokens.findOneAndUpdate({ id: payload.uId }, { $push: { refreshToken } }))
@@ -27,3 +27,10 @@ const generateTokens = (payload: payload) => {
 }
 
 export default generateTokens
+
+export const tempToken = (payload: payload): string => {
+    const Token = jwt.sign(payload, process.env.ACCESTOKEN_TOKEN_SECRET as Secret, {
+        expiresIn: '15m'
+    })
+    return Token
+}

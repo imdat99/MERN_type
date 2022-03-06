@@ -1,21 +1,20 @@
 import { Layout } from 'antd';
-import { ReactChild, ReactChildren, FC } from 'react';
+import { Outlet, useLocation } from 'react-router';
 import AcountHeader from './accountheader.componet';
 import AppHeader from './appheader.component';
 import './layout.css'
 
 const { Content, Footer } = Layout;
 
-interface AppLayoutProps {
-    children?: ReactChild | ReactChildren
-    isAccount: boolean
-}
-const AppLayout: FC<AppLayoutProps> = ({ children, isAccount }) => {
+
+const AppLayout = () => {
+    const location = useLocation()
+    const { pathname } = location
     return (
         <Layout className="layout">
-            {isAccount ? <AcountHeader /> : <AppHeader />}
+            {pathname === '/dash/account' ? <AcountHeader /> : <AppHeader />}
             <Content className="AppLayoutContent">
-                {children}
+                <Outlet />
             </Content>
             <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
         </Layout>

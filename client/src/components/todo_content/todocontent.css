@@ -1,0 +1,8 @@
+.TodoContent {
+    padding: 10px;
+    background: #f8f8f8;
+}
+
+.skeletonTodo:not(:last-child) {
+    margin-bottom: 10px;
+}

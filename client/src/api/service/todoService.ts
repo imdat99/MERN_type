@@ -1,12 +1,9 @@
-import { TODO_ENDPOINT, PROFILE_ENTPOINT } from '../common/const/endpoint.const'
-import itodo from "../common/interface/todo.interface";
-import client from "./client";
+import { TODO_ENDPOINT } from '../../common/const/endpoint.const'
+import itodo from "../../common/interface/todo.interface";
+import client from "../client";
 
-const CallService = {
-    getProfile: (): Promise<any> => {
-        return client.get(PROFILE_ENTPOINT).then(res => res.data)
-    },
-
+const todoService = {
+    //todo service
     getTodo: (): Promise<any> => {
         return client.get(TODO_ENDPOINT)
     },
@@ -24,4 +21,4 @@ const CallService = {
     }
 }
 
-export default CallService
+export default todoService

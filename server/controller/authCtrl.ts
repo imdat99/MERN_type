@@ -5,9 +5,10 @@ import argon2 from 'argon2'
 import users, { user } from "../models/users";
 import dbRefreshTokens from "../models/dbRefreshToken"
 import profiles from "../models/profiles";
-import generateTokens, { token } from "../middleware/generateTokens";
+import generateTokens, { tempToken, token } from "../middleware/generateTokens";
 import asyncWrapper from "../middleware/asyncWrapper";
 import returnRes from "../middleware/returnRes";
+import sendMail from "../middleware/sendMail";
 
 const authCtrl = {
     setAuth: asyncWrapper(async (req: RequestCustom, res: Response) => {
@@ -65,6 +66,21 @@ const authCtrl = {
         returnRes.resCookie(res, token)
     }),
 
+    changePass: asyncWrapper(async (req: RequestCustom, res: Response) => {
+        const { oldpass, password } = req.body
+        const user: user | null = await users.findById({ _id: req.uId })
+
+        if (!user) return returnRes.res400(res, "User not found")
+        const passwordValid = await argon2.verify(user.password, oldpass);
+        if (!passwordValid) return returnRes.res400(res, "Incorrect password")
+
+        const hashedPassword = await argon2.hash(password);
+        let updatedpass = { password: hashedPassword }
+        updatedpass = await users.findByIdAndUpdate({ _id: req.uId }, updatedpass, { new: true }) as typeof updatedpass
+
+        returnRes.res200(res)
+    }),
+
     reqRefreshtoken: asyncWrapper(async (req: RequestCustom, res: Response) => {
         await dbRefreshTokens.findOneAndUpdate({ id: req.uId }, { $pull: { refreshToken: { $in: [req.refreshToken] } } })
         const token = generateTokens({ uId: req.uId })
@@ -78,8 +94,25 @@ const authCtrl = {
             refreshToken: ''
         }
         returnRes.resCookie(res, token)
-    })
+    }),
 
+    resetPass: asyncWrapper(async (req: RequestCustom, res: Response) => {
+        const { password } = req.body
+        console.log(password)
+        const hashedPassword = await argon2.hash(password);
+        let updatedpass = { password: hashedPassword }
+        updatedpass = await users.findByIdAndUpdate({ _id: req.uId }, updatedpass, { new: true }) as typeof updatedpass
+
+        returnRes.res200(res)
+    }),
+
+    forgot: asyncWrapper(async (req: RequestCustom, res: Response) => {
+        const { username } = req.body
+        const user = await users.findOne({ username });
+        if (!user) return returnRes.res400(res, 'User not found')
+        const profile = await profiles.findOne({ id: user._id })
+        await sendMail(profile.email, tempToken({ uId: user._id }), res)
+    }),
 }
 
 export default authCtrl

@@ -7,14 +7,14 @@ import { RequestCustom } from './type';
 const verifytoken = (req: RequestCustom, res: Response, next: NextFunction) => {
     const authHeader = req.header("authorization");
     const token = authHeader && authHeader.split(" ")[1];
-    const refreshToken = req.cookies.MERN_refreshToken
+    // const refreshToken = req.cookies.MERN_refreshToken
     if (!token) return returnRes.res401(res)
-    if (!refreshToken) return returnRes.res401(res)
+    // if (!refreshToken) return returnRes.res401(res)
     try {
         const payload = jwt.verify(token, process.env.ACCESTOKEN_TOKEN_SECRET as Secret) as any
-        jwt.verify(refreshToken, process.env.REFRESHTOKEN_TOKEN_SECRET as Secret) as any
+        // jwt.verify(refreshToken, process.env.REFRESHTOKEN_TOKEN_SECRET as Secret) as any
         req.uId = payload.uId
-        req.refreshToken = refreshToken
+        // req.refreshToken = refreshToken
 
         next();
     } catch (err) {

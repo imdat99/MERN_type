@@ -1,6 +1,6 @@
 import { EditOutlined } from '@ant-design/icons'
 import { Input, Typography } from 'antd'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import iprofile from '../interface/profile.interface'
 
 interface Props {
@@ -24,6 +24,14 @@ const EditableText: FC<Props> = (props) => {
         edit: false,
         backup: '',
     })
+    useEffect(() => {
+
+        setState(prev => ({
+            ...prev,
+            value: props.value as string
+        }))
+    }, [props])
+
     const edit = () => {
         setState({ ...state, edit: state.edit !== false })
     }
@@ -41,7 +49,7 @@ const EditableText: FC<Props> = (props) => {
                     const value = event.target.value
                     event.target.value = ''
                     event.target.value = value
-                    setState({ ...state, backup: state.value })
+                    setState({ ...state, backup: state.value as string })
                 }}
                 onChange={event => {
                     setState({ ...state, value: event.target.value })
@@ -68,7 +76,7 @@ const EditableText: FC<Props> = (props) => {
                     const value = event.target.value
                     event.target.value = ''
                     event.target.value = value
-                    setState({ ...state, backup: state.value })
+                    setState({ ...state, backup: state.value as string })
                 }}
                 onChange={event => {
                     setState({ ...state, value: event.target.value })

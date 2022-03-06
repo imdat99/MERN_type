@@ -1,36 +1,32 @@
 import { message } from "antd"
-import { useNavigate } from "react-router"
-import client from "../../api/client"
-import { LOGIN_ENDPOINT, REGISTER_ENDPOINT } from "../../common/const/endpoint.const"
+//lib
+
+import AuthService from "../../api/service/authService"
 import { LoginData, RegData } from "../../common/interface/user.interface"
-import store, { useAppDispatch } from "../../store"
+import store from "../../store"
 import { setToken } from "../../store/accesstoken"
 
 
 const handleLogin = async (loginData: LoginData) => {
-    await client.post(
-        LOGIN_ENDPOINT, loginData
-    ).then(res => { return res.data })
+    await AuthService.login(loginData)
         .then((response) => {
             message.success("Login succeeded!")
             store.dispatch(setToken(response.accesstoken))
         })
         .catch((e) => {
-            message.error(e.message);
+            message.error(e.response.data.msg);
             console.log(e.message)
         })
 }
 
 const handleResgister = async (regData: RegData) => {
-    await client.post(
-        REGISTER_ENDPOINT, regData
-    ).then(res => res.data)
+    await AuthService.register(regData)
         .then((response) => {
             message.success("register succeeded!")
             store.dispatch(setToken(response.accesstoken))
         })
         .catch((e) => {
-            message.error(e.message);
+            message.error(e.response.data.msg);
             console.log(e.message)
         })
 }

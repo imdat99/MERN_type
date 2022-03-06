@@ -31,7 +31,7 @@ const todoCtrl = {
         // { results: todosData, fullUrl }
         returnRes_1.default.res200(res, { results: todosData });
     })),
-    addTodos: (0, asyncWrapper_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    addTodo: (0, asyncWrapper_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { title, desc, status } = req.body;
         const newTodo = new todos_1.default({ id: req.uId, title, desc, status });
         yield newTodo.save();
