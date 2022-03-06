@@ -16,7 +16,12 @@ const headers = {
 const getAccessToken = async () => {
     const refreshToken = localStorage.getItem(REFRESH_TOKEN)
     if (refreshToken) {
-        await axios.get(REFRESH_TOKEN_ENDPOINT, { withCredentials: true })
+        await axios.get(REFRESH_TOKEN_ENDPOINT, {
+            withCredentials: true,
+            headers: {
+                "Authorization": `Bearer ${refreshToken}`
+            }
+        })
             .then(res => res.data)
             .then((res) => {
                 localStorage.setItem(REFRESH_TOKEN, res.refreshToken)
@@ -31,7 +36,7 @@ const getAccessToken = async () => {
 
 const client = axios.create({
     withCredentials: true,
-    baseURL: "https://glacial-oasis-31254.herokuapp.com/",
+    baseURL: "https://glacial-oasis-31254.herokuapp.com/api/v1",
     headers,
 })
 
