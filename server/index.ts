@@ -14,11 +14,6 @@ app.use(express.urlencoded({ extended: false }))
 
 const corsOptions = {
     //To allow requests from client
-    origin: [
-        "http://localhost:3000",
-        "http://127.0.0.1",
-        "https://vite-todo123.netlify.app/",
-    ],
     credentials: true,
     exposedHeaders: ["set-cookie"],
 };
