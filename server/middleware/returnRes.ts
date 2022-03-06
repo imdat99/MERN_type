@@ -17,7 +17,7 @@ const returnRes = {
         res.cookie("MERN_refreshToken", token.refreshToken, {
             httpOnly: false,
             sameSite: "strict",
-            secure: false,
+            secure: true,
             path: '/'
         })
         res.status(200).json({
