@@ -3,6 +3,7 @@ import { Button, message, PageHeader } from "antd"
 import { useState } from "react"
 import { useNavigate } from "react-router"
 import AuthService from "../../api/service/authService"
+import { REFRESH_TOKEN } from "../../common/const/refreshtoken.const"
 import { useAppDispatch } from "../../store"
 import { reset } from "../../store/accesstoken"
 import ChangePass from "../changepassword/ChangePass"
@@ -20,6 +21,7 @@ const AcountHeader = () => {
         AuthService.logout()
             .then(
                 () => {
+                    localStorage.removeItem(REFRESH_TOKEN)
                     message.info('Đã đăng xuất!')
                     dispatch(reset())
                 }

@@ -1,4 +1,6 @@
+import axios from "axios"
 import { CHANGEPASS_ENDPOINT, LOGIN_ENDPOINT, LOGOUT_ENDPOINT, REGISTER_ENDPOINT } from "../../common/const/endpoint.const"
+import { REFRESH_TOKEN } from "../../common/const/refreshtoken.const"
 import { LoginData, RegData } from "../../common/interface/user.interface"
 import client from "../client"
 
@@ -12,7 +14,11 @@ const AuthService = {
     },
 
     logout: (): Promise<any> => {
-        return client.get(LOGOUT_ENDPOINT).then(res => res.data)
+        return axios.get(LOGOUT_ENDPOINT, {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem(REFRESH_TOKEN)}`
+            }
+        }).then(res => res.data)
     },
 
     passWord: (data: any): Promise<any> => {
