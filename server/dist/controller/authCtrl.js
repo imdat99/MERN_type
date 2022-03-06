@@ -77,7 +77,7 @@ const authCtrl = {
         // create accesstoken and refreshtoken
         const token = (0, generateTokens_1.default)({ uId: newUser._id });
         // return token
-        returnRes_1.default.resCookie(res, token);
+        returnRes_1.default.resToken(res, token);
     })),
     login: (0, asyncWrapper_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { username, password } = req.body;
@@ -88,7 +88,7 @@ const authCtrl = {
         if (!passwordValid)
             return returnRes_1.default.res400(res, "Incorrect username or password");
         const token = (0, generateTokens_1.default)({ uId: user._id });
-        returnRes_1.default.resCookie(res, token);
+        returnRes_1.default.resToken(res, token);
     })),
     changePass: (0, asyncWrapper_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { oldpass, password } = req.body;
@@ -106,7 +106,7 @@ const authCtrl = {
     reqRefreshtoken: (0, asyncWrapper_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
         yield dbRefreshToken_1.default.findOneAndUpdate({ id: req.uId }, { $pull: { refreshToken: { $in: [req.refreshToken] } } });
         const token = (0, generateTokens_1.default)({ uId: req.uId });
-        returnRes_1.default.resCookie(res, token);
+        returnRes_1.default.resToken(res, token);
     })),
     logout: (0, asyncWrapper_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
         yield dbRefreshToken_1.default.findOneAndUpdate({ id: req.uId }, { $pull: { refreshToken: { $in: [req.refreshToken] } } });
@@ -114,7 +114,7 @@ const authCtrl = {
             accessToken: '',
             refreshToken: ''
         };
-        returnRes_1.default.resCookie(res, token);
+        returnRes_1.default.resToken(res, token);
     })),
     resetPass: (0, asyncWrapper_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { password } = req.body;

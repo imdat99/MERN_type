@@ -5,8 +5,10 @@ import { RequestCustom } from './type';
 import dbRefreshTokens, { RefreshTokens } from '../models/dbRefreshToken'
 
 
-const verifyCookie = async (req: RequestCustom, res: Response, next: NextFunction) => {
-    const refreshToken = req.cookies.MERN_refreshToken
+const verifyRefreshToken = async (req: RequestCustom, res: Response, next: NextFunction) => {
+
+    const authHeader = req.header("authorization");
+    const refreshToken = authHeader && authHeader.split(" ")[1];
     if (!refreshToken) return returnRes.res401(res)
     try {
         const payload = jwt.verify(refreshToken, process.env.REFRESHTOKEN_TOKEN_SECRET as Secret) as any
@@ -28,4 +30,4 @@ const verifyCookie = async (req: RequestCustom, res: Response, next: NextFunctio
     }
 };
 
-export default verifyCookie
+export default verifyRefreshToken

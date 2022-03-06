@@ -1,6 +1,5 @@
 import axios from 'axios'
-import Cookie from 'js-cookie'
-import { REFRESH_TOKEN_COOKIES } from '../common/const/cookie.const'
+import { REFRESH_TOKEN } from '../common/const/refreshtoken.const'
 import { REFRESH_TOKEN_ENDPOINT } from '../common/const/endpoint.const'
 import { setToken } from '../store/accesstoken'
 import store from '../store/index'
@@ -15,7 +14,7 @@ const headers = {
 }
 
 const getAccessToken = async () => {
-    const refreshToken = Cookie.get(REFRESH_TOKEN_COOKIES)
+    const refreshToken = localStorage.getItem(REFRESH_TOKEN)
     if (refreshToken) {
         await axios.get(REFRESH_TOKEN_ENDPOINT, { withCredentials: true })
             .then(res => res.data)
@@ -23,7 +22,7 @@ const getAccessToken = async () => {
                 store.dispatch(setToken(res.accesstoken))
             })
             .catch(err => {
-                if (err.response.status === 403) Cookie.remove(REFRESH_TOKEN_COOKIES)
+                if (err.response.status === 403) localStorage.remove(REFRESH_TOKEN)
             }
             )
     } else store.dispatch(setToken(''))
@@ -31,7 +30,7 @@ const getAccessToken = async () => {
 
 const client = axios.create({
     withCredentials: true,
-    baseURL: "https://glacial-oasis-31254.herokuapp.com/api/v1",
+    baseURL: "http://localhost:5000//api/v1",
     headers,
 })
 
@@ -48,6 +47,7 @@ client.interceptors.request.use(
 
 client.interceptors.response.use(
     (response) => {
+        console.log(response)
         return response
     },
     async (error: any) => {

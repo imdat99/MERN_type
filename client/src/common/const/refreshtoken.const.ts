@@ -1,0 +1,1 @@
+export const REFRESH_TOKEN = "MERN_refreshToken";

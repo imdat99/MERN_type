@@ -1,5 +1,5 @@
 
-const SERVER_ADDRESS = "https://glacial-oasis-31254.herokuapp.com";
+const SERVER_ADDRESS = "http://localhost:5000";
 
 // todo endpoint
 export const TODO_ENDPOINT = `${SERVER_ADDRESS}/api/v1/todo/`;

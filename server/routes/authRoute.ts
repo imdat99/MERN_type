@@ -1,6 +1,6 @@
 import express from 'express'
 import authCtrl from '../controller/authCtrl';
-import verifyCookie from '../middleware/verifyCookie';
+import verifyRefreshToken from '../middleware/verifyRefreshToken';
 import verifyToken from '../middleware/verifyToken';
 
 const router = express.Router()
@@ -13,9 +13,9 @@ router.post('/register', authCtrl.register)
 
 router.post('/login', authCtrl.login)
 
-router.get('/refreshtoken', verifyCookie, authCtrl.reqRefreshtoken)
+router.get('/refreshtoken', verifyRefreshToken, authCtrl.reqRefreshtoken)
 
-router.get('/logout', verifyCookie, authCtrl.logout)
+router.get('/logout', verifyRefreshToken, authCtrl.logout)
 
 router.post('/forgot', authCtrl.forgot)
 

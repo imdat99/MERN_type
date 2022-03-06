@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 
 import todoService from './api/service/todoService'
-import { REFRESH_TOKEN_COOKIES } from './common/const/cookie.const'
 import { useAppDispatch, useAppSelector } from './store'
 import { setToken } from './store/accesstoken'
 import { setUser } from './store/user'

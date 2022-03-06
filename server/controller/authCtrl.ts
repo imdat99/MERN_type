@@ -48,7 +48,7 @@ const authCtrl = {
         // create accesstoken and refreshtoken
         const token = generateTokens({ uId: newUser._id })
         // return token
-        returnRes.resCookie(res, token)
+        returnRes.resToken(res, token)
 
     }),
 
@@ -63,7 +63,7 @@ const authCtrl = {
 
         const token = generateTokens({ uId: user._id })
 
-        returnRes.resCookie(res, token)
+        returnRes.resToken(res, token)
     }),
 
     changePass: asyncWrapper(async (req: RequestCustom, res: Response) => {
@@ -84,7 +84,7 @@ const authCtrl = {
     reqRefreshtoken: asyncWrapper(async (req: RequestCustom, res: Response) => {
         await dbRefreshTokens.findOneAndUpdate({ id: req.uId }, { $pull: { refreshToken: { $in: [req.refreshToken] } } })
         const token = generateTokens({ uId: req.uId })
-        returnRes.resCookie(res, token)
+        returnRes.resToken(res, token)
     }),
 
     logout: asyncWrapper(async (req: RequestCustom, res: Response) => {
@@ -93,7 +93,7 @@ const authCtrl = {
             accessToken: '',
             refreshToken: ''
         }
-        returnRes.resCookie(res, token)
+        returnRes.resToken(res, token)
     }),
 
     resetPass: asyncWrapper(async (req: RequestCustom, res: Response) => {

@@ -1,6 +1,7 @@
 import { Response } from "express";
 import { token } from "./generateTokens";
 const returnRes = {
+    // MERN_refreshToken
     res400: (res: Response, msg: string) => res.status(400).json({ success: false, msg }),
 
     res401: (res: Response) => res.status(401).json({ success: false, msg: "Access token not found" }),
@@ -13,18 +14,13 @@ const returnRes = {
 
     res200: (res: Response, results?: any, msg?: string) => res.status(200).json({ success: true, ...results, msg }),
 
-    resCookie: (res: Response, token: token, results?: any, msg?: string) => {
-        res.cookie("MERN_refreshToken", token.refreshToken, {
-            httpOnly: false,
-            sameSite: "strict",
-            secure: true,
-            path: '/'
-        })
+    resToken: (res: Response, token: token, results?: any, msg?: string) => {
         res.status(200).json({
             success: true,
             results,
             msg,
-            accesstoken: token.accessToken
+            accesstoken: token.accessToken,
+            refreshToken: token.refreshToken
         })
     }
 }
