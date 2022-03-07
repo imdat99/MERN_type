@@ -64,7 +64,7 @@ const AddTodo: React.FC<createTodo> = ({
                 <Form.Item name="description" label="Description">
                     <Input.TextArea />
                 </Form.Item>
-                <Form.Item name="status" >
+                <Form.Item name="status" label="Status">
                     <Radio.Group className='statusRadio.' buttonStyle="solid">
                         <Radio.Button value="READY">📃 To do</Radio.Button>
                         <Radio.Button value="PROCESSING">✏️ In progress</Radio.Button>
@@ -77,34 +77,5 @@ const AddTodo: React.FC<createTodo> = ({
     );
 };
 
-// const AddTodo = () => {
-//     const [visible, setVisible] = useState(false);
-
-//     const onCreate = (values: any) => {
-//         console.log('Received values of form: ', values);
-//         setVisible(false);
-//     };
-
-//     return (
-//         <div>
-//             <Button
-//                 type="primary"
-//                 onClick={() => {
-//                     setVisible(true);
-//                 }}
-//             >
-//                 New Collection
-//             </Button>
-//             <CollectionCreateForm
-//                 visible={visible}
-//                 onCreate={onCreate}
-//                 onCancel={() => {
-//                     setVisible(false);
-
-//                 }}
-//             />
-//         </div>
-//     );
-// };
 
 export default AddTodo

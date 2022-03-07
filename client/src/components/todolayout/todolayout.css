@@ -7,3 +7,7 @@
 .draggableContent:not(:last-child) {
     margin-bottom: 10px;
 }
+
+.ant-empty.ant-empty-normal {
+    margin: 0;
+}

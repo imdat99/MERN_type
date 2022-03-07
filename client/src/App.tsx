@@ -10,7 +10,7 @@ import { setUser } from './store/user'
 import './App.css'
 import AppLayout from './components/applayout/appLayout.component'
 import LoginPage from './pages/login/login.page'
-import TaskContainer from './components/todolayout/todolayout.component'
+import TodoLayout from './components/todolayout/todolayout.component'
 import AddTodo from './components/addtodo/addtodo.component'
 import AccountPage from './pages/account/account.page'
 import AccountLayout from './components/account/accountlayout.component'
@@ -48,8 +48,8 @@ function App() {
     <>
       {/* <AccountPage /> */}
       <AppLayout isAccount={true}>
-        {/* <TaskContainer /> */}
-        <AccountLayout />
+        <TodoLayout />
+        {/* <AccountLayout /> */}
       </AppLayout>
       {/* {modal ? <AddTodo /> : ''} */}
     </>
